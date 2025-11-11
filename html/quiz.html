@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Maker - AI Luật</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/animations.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="/img/Law.png" alt="Logo">
+        <span>Pháp Luật Số</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="chat.html">Chat AI</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.html">Hồ sơ</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-quizzes.html">Bộ đề</a></li>
+          <li class="nav-item"><a class="nav-link" href="guide.html">Hướng dẫn</a></li>
+          <li class="nav-item"><a class="nav-link" href="stats.html">Thống kê</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">Về chúng tôi</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html">Quản trị</a></li>
+          <li class="nav-item ms-lg-3"><a class="btn btn-outline-primary btn-sm px-3" href="login.html"><i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-primary btn-sm px-3" href="register.html"><i class="bi bi-person-plus me-1"></i>Đăng Ký</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section-padding pt-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="card p-3">
+            <h5>Quản lý bộ đề</h5>
+            <button id="add-set-btn" class="btn btn-primary w-100 mb-3">Thêm bộ đề</button>
+
+            <div id="question-section" style="display: none;">
+              <h5>Thêm câu hỏi</h5>
+              <form id="add-question-form">
+                <div class="mb-3">
+                  <label for="q-text" class="form-label">Nội dung câu hỏi</label>
+                  <textarea id="q-text" class="form-control" rows="3" required></textarea>
+                </div>
+                <div id="answers-container" class="mb-3">
+                  <label class="form-label">Đáp án</label>
+                  <div class="input-group mb-2">
+                    <div class="input-group-text">
+                      <input type="radio" name="correct-answer" value="0" required>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Đáp án 1" required>
+                  </div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-text">
+                      <input type="radio" name="correct-answer" value="1">
+                    </div>
+                    <input type="text" class="form-control" placeholder="Đáp án 2" required>
+                  </div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-text">
+                      <input type="radio" name="correct-answer" value="2" required>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Đáp án 3" required>
+                  </div>
+                  <div class="input-group mb-2">
+                    <div class="input-group-text">
+                      <input type="radio" name="correct-answer" value="3" required>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Đáp án 4" required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Thêm câu hỏi cho bộ đề</button>
+              </form>
+
+              <hr>
+              <h6>Import file đề cương </h6>
+              <input type="file" id="import-file" class="form-control mb-2" accept=".csv,.txt">
+              <button id="import-btn" class="btn btn-outline-secondary w-100">AI tạo đề </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0">Danh sách bộ đề <small id="count" class="text-muted ms-2">(2)</small></h5>
+              <div>
+                <button id="preview-btn" class="btn btn-sm btn-outline-secondary me-2">Xem trước đề</button>
+                <button id="print-btn" class="btn btn-sm btn-primary">In / Xuất PDF</button>
+              </div>
+            </div>
+
+            <ul class="list-group" id="question-list" style="max-height:60vh; overflow:auto"></ul>
+            <div class="card p-4">
+            <h4 class="mb-3">Bộ Đề Đã Tạo</h4>
+            <ul class="list-group mb-3" id="quiz-list">
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Đề ôn tập Luật Hình Sự
+                <span>
+                 
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                Đề ôn tập Luật Dân Sự
+               
+              </li>
+            </ul>
+          
+          </div>
+          </div>
+
+          <div class="card p-3 mt-3" id="generated-card" style="display:none">
+            <h5>Đề ôn tập</h5>
+            <div id="generated-content" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const addSetBtn = document.getElementById('add-set-btn');
+    const questionSection = document.getElementById('question-section');
+    const form = document.getElementById('add-question-form');
+
+    // Hiển thị giao diện thêm câu hỏi
+    addSetBtn.addEventListener('click', () => {
+      questionSection.style.display = 'block';
+      addSetBtn.style.display = 'none';
+    });
+
+    // Xử lý thêm câu hỏi
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const questionText = document.getElementById('q-text').value.trim();
+      const answers = Array.from(document.querySelectorAll('#answers-container input[type="text"]')).map(input => input.value.trim());
+      const correctAnswer = document.querySelector('input[name="correct-answer"]:checked');
+
+      if (!questionText || answers.some(ans => !ans) || !correctAnswer) {
+        alert('Vui lòng nhập đầy đủ thông tin và chọn đáp án đúng.');
+        return;
+      }
+
+      const question = {
+        question: questionText,
+        answers: answers,
+        correct: parseInt(correctAnswer.value)
+      };
+
+      console.log('Câu hỏi mới:', question);
+      form.reset();
+    });
+
+    // Xử lý import câu hỏi từ file
+    document.getElementById('import-btn').addEventListener('click', () => {
+      const fileInput = document.getElementById('import-file');
+      if (!fileInput.files.length) {
+        alert('Vui lòng chọn file để import.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const content = e.target.result;
+        const lines = content.split('\n').filter(line => line.trim());
+
+        lines.forEach((line, index) => {
+          const [question, ...answers] = line.split('|');
+          if (question && answers.length >= 4) {
+            console.log(`Câu ${index + 1}:`, { question, answers });
+          } else {
+            console.warn(`Dòng ${index + 1} không hợp lệ:`, line);
+          }
+        });
+      };
+
+      reader.readAsText(file);
+    });
+  });
+  </script>
+</body>
+</html>

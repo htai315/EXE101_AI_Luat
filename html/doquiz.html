@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Làm Quiz - AI Luật</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/animations.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="/img/Law.png" alt="Logo">
+        <span>Pháp Luật Số</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="chat.html">Chat AI</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.html">Hồ sơ</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-quizzes.html">Bộ đề</a></li>
+          <li class="nav-item"><a class="nav-link" href="guide.html">Hướng dẫn</a></li>
+          <li class="nav-item"><a class="nav-link" href="stats.html">Thống kê</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html">Quản trị</a></li>
+          <li class="nav-item ms-auto"><a class="btn btn-outline-primary" href="login.html"><i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập</a></li>
+          <li class="nav-item"><a class="btn btn-primary" href="register.html"><i class="bi bi-person-plus me-1"></i>Đăng Ký</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section-padding pt-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="card p-3">
+            <h5>Chọn chủ đề Quiz</h5>
+            <form id="quiz-selection-form">
+              <div class="mb-3">
+                <label for="quiz-topic" class="form-label">Chủ đề</label>
+                <select id="quiz-topic" class="form-select" required>
+                  <option value="">-- Chọn chủ đề --</option>
+                  <option value="human-resources">Luật Nhân Sự</option>
+                  <option value="civil-law">Luật Dân Sự</option>
+                  <option value="criminal-law">Luật Hình Sự</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Bắt đầu làm bài</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card p-3" id="quiz-container" style="display:none">
+            <h5 id="quiz-title">Bài Quiz</h5>
+            <div id="quiz-content">
+              <!-- Nội dung câu hỏi sẽ được thêm động tại đây -->
+            </div>
+            <button id="submit-quiz-btn" class="btn btn-success w-100 mt-3" style="display:none">Nộp bài</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const quizForm = document.getElementById('quiz-selection-form');
+    const quizContainer = document.getElementById('quiz-container');
+    const quizContent = document.getElementById('quiz-content');
+    const submitQuizBtn = document.getElementById('submit-quiz-btn');
+
+    quizForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const selectedTopic = document.getElementById('quiz-topic').value;
+      if (!selectedTopic) {
+        alert('Vui lòng chọn chủ đề.');
+        return;
+      }
+
+      // Hiển thị bài quiz
+      quizContainer.style.display = 'block';
+      quizContent.innerHTML = '';
+      submitQuizBtn.style.display = 'block';
+
+      // Tạm thời thêm câu hỏi mẫu
+      if (selectedTopic === 'human-resources') {
+        quizContent.innerHTML = `
+          <div class="quiz-question">
+            <p><strong>Câu 1:</strong> Theo Luật Lao động, thời gian thử việc tối đa là bao lâu?</p>
+            <div>
+              <input type="radio" name="q1" id="q1a" value="1">
+              <label for="q1a">A. 30 ngày</label>
+            </div>
+            <div>
+              <input type="radio" name="q1" id="q1b" value="2">
+              <label for="q1b">B. 60 ngày</label>
+            </div>
+            <div>
+              <input type="radio" name="q1" id="q1c" value="3">
+              <label for="q1c">C. 90 ngày</label>
+            </div>
+            <div>
+              <input type="radio" name="q1" id="q1d" value="4">
+              <label for="q1d">D. 120 ngày</label>
+            </div>
+          </div>
+        `;
+      }
+    });
+
+    submitQuizBtn.addEventListener('click', () => {
+      alert('Bài làm của bạn đã được nộp!');
+      quizContainer.style.display = 'none';
+      quizForm.reset();
+    });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sửa Bộ Đề Ôn Tập - Pháp Luật Số</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif !important;
+      background-color: var(--color-light);
+      color: var(--color-dark);
+      margin: 0;
+      padding: 0;
+      padding-top: 100px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Playfair Display", serif !important;
+    }
+
+    .page-header {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      color: #fff;
+      padding: 30px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .page-header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0;
+      color: #fff;
+    }
+
+    .main-container {
+      width: 90%;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      background: #fff;
+      color: var(--color-dark);
+      padding: 35px 40px;
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--color-gray-light);
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--color-dark);
+      font-size: 0.95rem;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--color-gray-light);
+      background: #fff;
+      color: var(--color-dark);
+      font-size: 15px;
+      font-family: "Inter", sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 0.15rem rgba(26, 75, 132, 0.12);
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .question-card {
+      background: var(--color-light);
+      padding: 22px 24px;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      border: 1px solid var(--color-gray-light);
+      transition: all 0.3s ease;
+    }
+
+    .question-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: "Inter", sans-serif;
+    }
+
+    .btn-add {
+      background: var(--color-primary);
+      color: #fff;
+      margin-top: 15px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-add:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 75, 132, 0.3);
+    }
+
+    .btn-save {
+      background: #28a745;
+      color: #fff;
+    }
+
+    .btn-save:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: #fff;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-exit {
+      background: var(--color-primary);
+      color: #fff;
+      margin-top: 20px;
+      font-weight: 600;
+      padding: 12px 24px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-exit:hover {
+      background: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 75, 132, 0.3);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    hr {
+      margin: 25px 0;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="/img/Law.png" alt="Logo">
+        <span>Pháp Luật Số</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="chat.html">Chat AI</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.html">Hồ sơ</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-quizzes.html">Bộ đề</a></li>
+          <li class="nav-item"><a class="nav-link" href="guide.html">Hướng dẫn</a></li>
+          <li class="nav-item"><a class="nav-link" href="stats.html">Thống kê</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">Về chúng tôi</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html">Quản trị</a></li>
+          <li class="nav-item ms-lg-3"><a class="btn btn-outline-primary btn-sm px-3" href="login.html"><i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-primary btn-sm px-3" href="register.html"><i class="bi bi-person-plus me-1"></i>Đăng Ký</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1><i class="bi bi-pencil-square me-2"></i>Sửa Bộ Đề Ôn Tập</h1>
+  </div>
+
+  <div class="main-container">
+    <div class="input-group">
+      <label for="title">Tiêu đề bộ đề</label>
+      <input type="text" id="title" placeholder="Nhập tiêu đề... (vd: Ôn tập Luật Hình Sự - Phần 1)">
+    </div>
+
+    <div class="input-group">
+      <label for="description">Mô tả</label>
+      <textarea id="description" rows="3" placeholder="Nhập mô tả ngắn về bộ đề..."></textarea>
+    </div>
+
+    <hr>
+
+    <div id="questionList">
+      <!-- Danh sách câu hỏi sẽ hiển thị ở đây -->
+    </div>
+
+    <button class="btn btn-add" onclick="addQuestion()"><i class="bi bi-plus-circle me-2"></i>Thêm câu hỏi mới</button>
+
+    <div id="bottomActions" style="display:none; text-align:center; margin-top: 30px;">
+     <a href="my-quizzes.html" style="text-decoration: none;"><button class="btn btn-exit" onclick="saveAndExit()"><i class="bi bi-save me-2"></i>Lưu tất cả & Thoát</button></a> 
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="mb-0">&copy; 2025 Pháp Luật Số. Tất cả quyền được bảo lưu.</p>
+        <p class="mb-0">Được phát triển với <i class="bi bi-heart-fill text-danger"></i> tại Việt Nam</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/script.js"></script>
+  
+  <script>
+    let questionCount = 0;
+
+    function addQuestion() {
+      questionCount++;
+      const container = document.getElementById('questionList');
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question-card');
+      qDiv.innerHTML = `
+        <div class="question-header">
+          <span style="font-weight: 700; color: var(--color-primary);"><i class="bi bi-question-circle me-2"></i>Câu hỏi ${questionCount}</span>
+          <button class="btn btn-delete" onclick="removeQuestion(this)"><i class="bi bi-trash me-1"></i>Xóa</button>
+        </div>
+        <div class="input-group">
+          <label>Câu hỏi</label>
+          <input type="text" placeholder="Nhập nội dung câu hỏi...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án A</label>
+          <input type="text" placeholder="Nhập đáp án A...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án B</label>
+          <input type="text" placeholder="Nhập đáp án B...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án C</label>
+          <input type="text" placeholder="Nhập đáp án C...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án D</label>
+          <input type="text" placeholder="Nhập đáp án D...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án đúng</label>
+          <select>
+            <option value="">-- Chọn đáp án đúng --</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Giải thích</label>
+          <textarea rows="2" placeholder="Nhập giải thích hoặc ghi chú..."></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn btn-save"><i class="bi bi-save me-1"></i>Lưu thay đổi</button>
+        </div>
+      `;
+      container.appendChild(qDiv);
+      document.getElementById('bottomActions').style.display = "block";
+    }
+
+    function removeQuestion(btn) {
+      if (confirm("Bạn có chắc muốn xóa câu hỏi này?")) {
+        btn.parentElement.parentElement.remove();
+      }
+    }
+
+    function saveAndExit() {
+      alert("✅ Tất cả thay đổi đã được lưu!\nQuay lại trang chính...");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tạo Bộ Đề Ôn Tập Luật Hình Sự Mới</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600&display=swap');
+
+    body {
+      font-family: "Quicksand", "Segoe UI", sans-serif;
+      background-color: #fafafa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #ffffff;
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: #111;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 850px;
+      margin: 40px auto;
+      background: #fff;
+      color: #333;
+      padding: 30px 35px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #ddd;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #111;
+    }
+
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      background: #fff;
+      color: #333;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #666;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .question-card {
+      background: #fcfcfc;
+      padding: 18px 20px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      transition: box-shadow 0.3s;
+    }
+
+    .question-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      border: 1px solid #555;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      color: #222;
+    }
+
+    .btn:hover {
+      background-color: #222;
+      color: #fff;
+    }
+
+    .btn-add {
+      border-color: #999;
+      margin-top: 15px;
+    }
+
+    .btn-save, .btn-delete, .btn-exit {
+      border-color: #999;
+    }
+
+    .btn-exit {
+      background: #f9f9f9;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+
+    .btn-exit:hover {
+      background: #222;
+      color: #fff;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    hr {
+      margin: 25px 0;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <header>📘 Tạo Bộ Đề Ôn Tập Luật Hình Sự Mới</header>
+
+  <div class="container">
+    <div class="input-group">
+      <label for="title">Tiêu đề bộ đề</label>
+      <input type="text" id="title" placeholder="Nhập tiêu đề... (vd: Ôn tập Luật Hình Sự - Phần Mới)">
+    </div>
+
+    <div class="input-group">
+      <label for="description">Mô tả</label>
+      <textarea id="description" rows="3" placeholder="Nhập mô tả ngắn cho bộ đề mới..."></textarea>
+    </div>
+
+    <hr>
+
+    <div id="questionList">
+      <!-- Danh sách câu hỏi sẽ hiển thị ở đây -->
+    </div>
+
+    <button class="btn btn-add" onclick="addQuestion()">＋ Thêm câu hỏi cho bộ đề</button>
+
+    <div id="bottomActions" style="display:none; text-align:center;">
+     <a href="my-quizzes.html"><button class="btn btn-exit" onclick="saveAndExit()">💾 Lưu bộ đề & Thoát</button></a> 
+    </div>
+  </div>
+
+  <script>
+    let questionCount = 0;
+
+    function addQuestion() {
+      questionCount++;
+      const container = document.getElementById('questionList');
+      const qDiv = document.createElement('div');
+      qDiv.classList.add('question-card');
+      qDiv.innerHTML = `
+        <div class="question-header">
+          <span>Câu hỏi ${questionCount}</span>
+          <button class="btn btn-delete" onclick="removeQuestion(this)">🗑 Xóa</button>
+        </div>
+        <div class="input-group">
+          <label>Câu hỏi</label>
+          <input type="text" placeholder="Nhập nội dung câu hỏi...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án A</label>
+          <input type="text" placeholder="Nhập đáp án A...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án B</label>
+          <input type="text" placeholder="Nhập đáp án B...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án C</label>
+          <input type="text" placeholder="Nhập đáp án C...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án D</label>
+          <input type="text" placeholder="Nhập đáp án D...">
+        </div>
+        <div class="input-group">
+          <label>Đáp án đúng</label>
+          <select>
+            <option value="">-- Chọn đáp án đúng --</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Giải thích</label>
+          <textarea rows="2" placeholder="Nhập giải thích hoặc ghi chú..."></textarea>
+        </div>
+        <div class="actions">
+          <button class="btn btn-save">💾 Lưu câu hỏi</button>
+        </div>
+      `;
+      container.appendChild(qDiv);
+      document.getElementById('bottomActions').style.display = "block";
+    }
+
+    function removeQuestion(btn) {
+      if (confirm("Bạn có chắc muốn xóa câu hỏi này?")) {
+        btn.parentElement.parentElement.remove();
+      }
+    }
+
+    function saveAndExit() {
+      alert("✅ Bộ đề mới đã được lưu thành công!");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>

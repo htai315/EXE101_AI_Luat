@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Thanh Toán - Pháp Luật Số</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: #f6f7fb;
+      margin: 0;
+      padding-top: 100px;
+    }
+
+    .payment-container {
+      background: white;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 50px;
+    }
+    
+    @media (max-width: 991px) {
+      .payment-container {
+        flex-direction: column;
+        gap: 30px;
+        padding: 30px 20px;
+      }
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--color-primary);
+    }
+
+    .form-left, .form-right {
+      flex: 1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input[type="text"], input[type="email"], select, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #d7dce6;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 15px;
+      font-family: "Inter", sans-serif;
+      transition: all 0.3s ease;
+    }
+    
+    input[type="text"]:focus, input[type="email"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 0.15rem rgba(26, 75, 132, 0.12);
+    }
+
+    textarea {
+      resize: none;
+      height: 80px;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .highlight-box {
+      background: #fff5da;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      border: 1px solid #f7e6b5;
+      margin: 10px 0 20px 0;
+    }
+
+    .qr {
+      text-align: center;
+      margin: 20px 0;
+      display: none;
+    }
+
+    .qr img {
+      width: 250px;
+      height: 250px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .total {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .total span {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .btn-pay {
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .btn-pay:hover {
+      background-color: var(--color-primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(26, 75, 132, 0.3);
+    }
+    
+    .btn-excel {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .btn-excel:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-bottom: 20px;
+      background-color: white;
+      color: var(--color-primary);
+      border: 2px solid var(--color-primary);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: var(--color-primary);
+      color: white;
+      box-shadow: 0 4px 8px rgba(26, 75, 132, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="/img/Law.png" alt="Logo">
+        <span>Pháp Luật Số</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="chat.html">Chat AI</a></li>
+          <li class="nav-item"><a class="nav-link" href="quiz.html">Quiz</a></li>
+          <li class="nav-item"><a class="nav-link" href="profile.html">Hồ sơ</a></li>
+          <li class="nav-item"><a class="nav-link" href="my-quizzes.html">Bộ đề</a></li>
+          <li class="nav-item"><a class="nav-link" href="guide.html">Hướng dẫn</a></li>
+          <li class="nav-item"><a class="nav-link" href="stats.html">Thống kê</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+          <li class="nav-item"><a class="nav-link active" href="about.html">Về chúng tôi</a></li>
+          <li class="nav-item"><a class="nav-link" href="admin.html">Quản trị</a></li>
+          <li class="nav-item ms-lg-3"><a class="btn btn-outline-primary btn-sm px-3" href="login.html"><i class="bi bi-box-arrow-in-right me-1"></i>Đăng Nhập</a></li>
+          <li class="nav-item ms-lg-2"><a class="btn btn-primary btn-sm px-3" href="register.html"><i class="bi bi-person-plus me-1"></i>Đăng Ký</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="payment-container">
+    <!-- Cột bên trái -->
+    <div class="form-left">
+      <h2>Chọn phương thức thanh toán</h2>
+ <div class="highlight-box">
+          Vui lòng tải <b>ứng dụng ngân hàng</b> hoặc <b>ví điện tử</b> để quét mã QR sau khi thanh toán.
+        </div>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="method" checked> Thanh toán bằng ứng dụng ngân hàng, ví điện tử
+        </label>
+      
+
+        <label class="radio-option">
+          <input type="radio" name="method"> Thanh toán bằng ZaloPay
+        </label>
+
+        <label class="radio-option">
+          <input type="checkbox"> Yêu cầu hóa đơn
+        </label>
+      </div>
+
+      <h2>Thông tin người thanh toán</h2>
+      <label>Họ và tên</label>
+      <input type="text" placeholder="Nhập họ và tên của bạn" id="fullname">
+      <label>Số điện thoại</label>
+      <input type="text" placeholder="Nhập số điện thoại" id="phone">
+      <label>Ghi chú</label>
+      <textarea placeholder="Ghi chú thêm (nếu có)" id="note"></textarea>
+      <label>Email nhận hóa đơn</label>
+      <input type="email" placeholder="Nhập email của bạn" id="email">
+    </div>
+
+    <!-- Cột bên phải -->
+    <div class="form-right">
+      <h2>Thông tin đơn hàng của bạn</h2>
+
+      <label>Gói dịch vụ</label>
+      <select id="service">
+        <option value="159000">Gói người dân - 159.000đ / tháng</option>
+        <option value="289000">Gói tra cứu chuyên sâu - 289.000đ / tháng</option>
+        
+      </select>
+
+      <label>Số lượng tháng</label>
+      <input type="number" value="1" min="1" id="months">
+
+      <label>Mã khuyến mãi (nếu có)</label>
+      <input type="text" placeholder="Nhập mã giảm giá" id="discount">
+
+      <div style="background: var(--color-light); padding: 15px; border-radius: 8px; margin: 20px 0;">
+        <p style="margin-bottom: 8px;"><b>Giá gốc:</b> <span id="basePrice" style="color: var(--color-gray);">159.000đ</span></p>
+        <p class="total" style="font-size: 1.2rem; margin: 0;">Số tiền thanh toán: <span id="totalPrice" style="color: var(--color-primary); font-size: 1.3rem;">159.000đ</span></p>
+      </div>
+
+      <button class="btn-pay" id="payBtn"><i class="bi bi-credit-card me-2"></i>Thanh toán</button>
+
+      <!-- QR Code sẽ xuất hiện ngay dưới nút -->
+      <div class="qr" id="qrBox">
+        <img id="qrImage" src="" alt="Mã QR thanh toán">
+        <p class="mt-2"><strong>Quét mã QR để thanh toán</strong></p>
+      </div>
+
+      <!-- Nút xuất file Excel -->
+      <button class="btn-excel" id="exportExcelBtn"><i class="bi bi-file-earmark-excel me-2"></i>Xuất file Excel</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer" style="margin-top: 60px;">
+    <div class="container">
+      <div class="footer-bottom">
+        <p class="mb-0">&copy; 2025 Pháp Luật Số. Tất cả quyền được bảo lưu.</p>
+        <p class="mb-0">Được phát triển với <i class="bi bi-heart-fill text-danger"></i> tại Việt Nam</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/scripts/script.js"></script>
+  
+  <!-- Thư viện SheetJS để tạo Excel -->
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+  <script>
+    const serviceSelect = document.getElementById("service");
+    const monthsInput = document.getElementById("months");
+    const basePrice = document.getElementById("basePrice");
+    const totalPrice = document.getElementById("totalPrice");
+    const payBtn = document.getElementById("payBtn");
+    const qrBox = document.getElementById("qrBox");
+    const qrImage = document.getElementById("qrImage");
+    const exportExcelBtn = document.getElementById("exportExcelBtn");
+
+    function updatePrice() {
+      const price = parseInt(serviceSelect.value);
+      const months = parseInt(monthsInput.value) || 1;
+      const total = price * months;
+      basePrice.textContent = price.toLocaleString("vi-VN") + "đ";
+      totalPrice.textContent = total.toLocaleString("vi-VN") + "đ";
+      return total;
+    }
+
+    serviceSelect.addEventListener("change", updatePrice);
+    monthsInput.addEventListener("input", updatePrice);
+
+    // Hiển thị QR khi nhấn thanh toán
+    payBtn.addEventListener("click", () => {
+      const total = updatePrice();
+      const qrData = `Thanh toán ${total}đ cho gói ${serviceSelect.options[serviceSelect.selectedIndex].text}`;
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrData)}`;
+      qrImage.src = qrUrl;
+      qrBox.style.display = "block";
+      qrBox.scrollIntoView({ behavior: "smooth" });
+    });
+
+    // Xuất thông tin ra Excel
+    exportExcelBtn.addEventListener("click", () => {
+      const fullname = document.getElementById("fullname").value;
+      const phone = document.getElementById("phone").value;
+      const note = document.getElementById("note").value;
+      const email = document.getElementById("email").value;
+      const serviceText = serviceSelect.options[serviceSelect.selectedIndex].text;
+      const months = monthsInput.value;
+      const total = totalPrice.textContent;
+
+      // Dữ liệu Excel
+      const data = [
+        ["Họ và tên", "Số điện thoại", "Ghi chú", "Email", "Gói dịch vụ", "Số tháng", "Tổng tiền"],
+        [fullname, phone, note, email, serviceText, months, total]
+      ];
+
+      const ws = XLSX.utils.aoa_to_sheet(data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Đơn hàng");
+      XLSX.writeFile(wb, "DonHang.xlsx");
+    });
+  </script>
+</body>
+</html>

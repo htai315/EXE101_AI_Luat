@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tạo Đề Ôn Tập Mới</title>
+
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+:root {
+    --color-white: #ffffff;
+    --color-light: #f8fafc;
+    --color-gray-light: #e2e8f0;
+    --color-gray: #64748b;
+    --color-dark: #0f172a;
+    --color-primary: #033991;
+    --transition: all 0.25s ease;
+    --shadow-sm: 0 2px 6px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--color-light);
+    display: flex;
+    height: 100vh;
+    color: var(--color-dark);
+}
+
+/* === KHUNG TRÁI === */
+.sidebar {
+    width: 320px;
+    background-color: var(--color-white);
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-right: 1px solid var(--color-gray-light);
+}
+
+.sidebar-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.time-input {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.time-input label {
+    font-weight: 600;
+}
+
+.time-input input {
+    width: 60px;
+    padding: 6px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid var(--color-gray-light);
+    color: var(--color-dark);
+}
+
+.time-input button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: var(--transition);
+}
+
+.time-input button:hover {
+    background-color: #021e5a;
+}
+
+.timer-box {
+    background-color: var(--color-light);
+    border: 1px solid var(--color-gray-light);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/* === DANH SÁCH CÂU HỎI === */
+.question-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.question-button {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    height: 40px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.question-button:hover,
+.question-button.active {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* === NÚT TRƯỚC & TIẾP === */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.nav-btn {
+    flex: 1;
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    border: 1px solid var(--color-gray-light);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    margin: 0 5px;
+}
+
+.nav-btn:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* === NÚT THOÁT & LƯU === */
+.button-container {
+    border-top: 1px solid var(--color-gray-light);
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.action {
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    border: 1px solid var(--color-gray-light);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.action:hover {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* === KHUNG PHẢI === */
+.main {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background-color: var(--color-light);
+}
+
+.quiz-demo-card {
+    background: var(--color-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 5px solid var(--color-gray-light);
+    max-width: 800px;
+    margin: auto;
+}
+
+.quiz-demo-header {
+    padding: 1.25rem;
+    background: var(--color-light);
+    border-bottom: 1px solid var(--color-gray-light);
+    font-weight: 700;
+    color: var(--color-dark);
+    font-size: 1.1rem;
+}
+
+.quiz-demo-body {
+    padding: 1.5rem;
+}
+
+.quiz-number {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.quiz-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin: 0.5rem 0 1rem 0;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem;
+    background: var(--color-light);
+    border: 1px solid var(--color-gray-light);
+    border-radius: 8px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    border-color: var(--color-primary);
+}
+
+.quiz-option-correct {
+    background: #f0fdf4;
+    border-color: #22c55e;
+}
+
+.quiz-option label {
+    flex: 1;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.quiz-explanation {
+    padding: 1rem;
+    background: #eff6ff;
+    border-left: 3px solid #3b82f6;
+    border-radius: 6px;
+    color: var(--color-dark);
+    font-size: 0.9375rem;
+    margin-top: 1rem;
+}
+
+.quiz-explanation i {
+    color: var(--color-dark);
+    vertical-align: middle;
+}
+</style>
+</head>
+
+<body>
+<div class="sidebar">
+    <div class="sidebar-content">
+        <div class="time-input">
+            <label>Thời gian (phút):</label>
+            <input type="number" id="customTime" min="1" max="180" value="30">
+            <button onclick="setCustomTime()">Bắt đầu</button>
+        </div>
+        <div class="timer-box" id="timer">Chưa bắt đầu</div>
+        <div class="question-grid" id="questionGrid"></div>
+    </div>
+
+    <!-- Nút Trước / Tiếp -->
+    <div class="nav-buttons">
+        <button class="nav-btn" onclick="prevQuestion()"><i class="bi bi-arrow-left"></i> Trước</button>
+        <button class="nav-btn" onclick="nextQuestion()">Tiếp <i class="bi bi-arrow-right"></i></button>
+    </div>
+
+    <!-- Nút Lưu / Thoát -->
+    <div class="button-container">
+        <a href="my-quizzes.html"><button class="action">📨 Thoát</button></a>
+        <button class="action" onclick="saveProgress()">💾 Lưu bài</button>
+    </div>
+</div>
+
+<div class="main">
+    <div class="quiz-demo-card" id="questionContainer"></div>
+</div>
+
+<script>
+const questions = [
+    {
+        q: "Cơ quan nào có thẩm quyền khởi tố vụ án hình sự?",
+        options: ["Tòa án", "Cơ quan điều tra", "Viện kiểm sát", "Cơ quan thi hành án"],
+        correct: 1,
+        explain: "Theo BLTTHS, cơ quan điều tra có quyền khởi tố vụ án hình sự."
+    },
+    {
+        q: "Độ tuổi chịu trách nhiệm hình sự tối thiểu ở Việt Nam là:",
+        options: ["14 tuổi", "16 tuổi", "18 tuổi", "12 tuổi"],
+        correct: 0,
+        explain: "Người từ đủ 14 tuổi trở lên phải chịu TNHS trong một số tội nghiêm trọng."
+    },
+];
+
+let currentQuestion = 0;
+let timeLeft = 0;
+let timerInterval = null;
+
+/* TIMER */
+function setCustomTime() {
+    const minutes = parseInt(document.getElementById("customTime").value);
+    if (isNaN(minutes) || minutes <= 0) {
+        alert("Vui lòng nhập số phút hợp lệ!");
+        return;
+    }
+    timeLeft = minutes * 60;
+    if (timerInterval) clearInterval(timerInterval);
+    startTimer();
+}
+
+function startTimer() {
+    const timerElement = document.getElementById("timer");
+    timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            timerElement.textContent = "⏰ Hết thời gian!";
+            alert("Hết giờ làm bài!");
+            return;
+        }
+        timeLeft--;
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerElement.textContent = `⏳ Thời gian còn lại: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }, 1000);
+}
+
+/* HIỂN THỊ CÂU HỎI */
+function loadQuestion(index) {
+    currentQuestion = index;
+    document.querySelectorAll(".question-button").forEach(btn => btn.classList.remove("active"));
+    document.getElementById("btn" + index).classList.add("active");
+
+    const q = questions[index];
+    let html = `
+        <div class="quiz-demo-header">Câu hỏi ${index + 1}</div>
+        <div class="quiz-demo-body">
+            <span class="quiz-number">Câu ${index + 1}:</span>
+            <p class="quiz-text">${q.q}</p>
+            <div class="quiz-options">
+    `;
+    q.options.forEach((opt, i) => {
+        html += `
+            <div class="quiz-option" onclick="checkAnswer(${i})">
+                <input type="radio" name="quiz${index}" id="q${index}_${i}">
+                <label for="q${index}_${i}">${opt}</label>
+            </div>
+        `;
+    });
+    html += `
+            </div>
+            <div class="quiz-explanation" id="explainBox" style="display:none;"></div>
+        </div>
+    `;
+    document.getElementById("questionContainer").innerHTML = html;
+}
+
+/* NÚT TRƯỚC / TIẾP */
+function prevQuestion() {
+    if (currentQuestion > 0) loadQuestion(currentQuestion - 1);
+}
+
+function nextQuestion() {
+    if (currentQuestion < questions.length - 1) loadQuestion(currentQuestion + 1);
+}
+
+/* KIỂM TRA ĐÁP ÁN */
+function checkAnswer(selected) {
+    const q = questions[currentQuestion];
+    const opts = document.querySelectorAll(".quiz-option");
+    const explain = document.getElementById("explainBox");
+
+    opts.forEach((opt, i) => {
+        opt.onclick = null;
+        if (i === q.correct) opt.classList.add("quiz-option-correct");
+    });
+
+    explain.innerHTML = `
+        <i class="bi bi-info-circle me-2"></i>
+        <strong>Giải thích:</strong> ${q.explain}
+    `;
+    explain.style.display = "block";
+}
+
+/* LƯU BÀI */
+function saveProgress() {
+    alert("💾 Bài làm đã được lưu!");
+}
+
+/* KHỞI TẠO */
+function init() {
+    const grid = document.getElementById("questionGrid");
+    questions.forEach((_, i) => {
+        const btn = document.createElement("button");
+        btn.textContent = i + 1;
+        btn.className = "question-button";
+        btn.id = "btn" + i;
+        btn.onclick = () => loadQuestion(i);
+        grid.appendChild(btn);
+    });
+    loadQuestion(0);
+}
+init();
+</script>
+</body>
+</html>
