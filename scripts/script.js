@@ -73,6 +73,34 @@ window.addEventListener("scroll", () => {
   })
 })
 
+// Set active navbar link based on current page (works for separate HTML files)
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link')
+    const path = window.location.pathname || ''
+    // get filename (e.g., about.html). If root, default to index.html
+    let page = path.substring(path.lastIndexOf('/') + 1)
+    if (!page) page = 'index.html'
+
+    navLinks.forEach((link) => {
+      const href = link.getAttribute('href') || ''
+      // normalize href by removing any query/hash and any path
+      const hrefNoHash = href.split('#')[0].split('?')[0]
+      const hrefFile = hrefNoHash.substring(hrefNoHash.lastIndexOf('/') + 1)
+      if (hrefFile === page) {
+        link.classList.add('active')
+      }
+      // special case: link to index without filename (e.g., './' or '/')
+      if ((href === '' || href === './' || href === '/' ) && page === 'index.html') {
+        link.classList.add('active')
+      }
+    })
+  } catch (e) {
+    // fail silently
+    console.warn('Nav active detection error', e)
+  }
+})
+
 // Quiz option selection
 document.querySelectorAll(".quiz-option").forEach((option) => {
   option.addEventListener("click", function () {
